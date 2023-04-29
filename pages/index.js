@@ -1,7 +1,8 @@
+import Card from "@/components/product/Card";
 import Head from "next/head";
 import Link from "next/link";
 
-export default function Home({ posts }) {
+export default function Home({ products }) {
   return (
     <>
       <Head>
@@ -10,24 +11,22 @@ export default function Home({ posts }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Link href={"/about"}>to About</Link>
-      {posts?.map(d => (
-        <Link key={d.id} href={`/post/${d.id}`}>
-          <h1>
-            {d.id}. {d.title}
-          </h1>
-        </Link>
-      ))}
+
+      <div className="max-w-7xl gap-5 mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+        {products?.map(pro => (
+          <Card key={pro.id} {...pro}></Card>
+        ))}
+      </div>
     </>
   );
 }
 
 export async function getStaticProps() {
-  const res = await fetch("https://dummyjson.com/posts");
+  const res = await fetch("https://api.escuelajs.co/api/v1/products");
   const data = await res.json();
   return {
     props: {
-      posts: data.posts,
+      products: data,
     }, // will be passed to the page component as props
   };
 }

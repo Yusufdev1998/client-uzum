@@ -46,5 +46,6 @@ export async function getStaticProps({ params }) {
     props: {
       product: data,
     }, // will be passed to the page component as props
+    revalidate: 60,
   };
 }
